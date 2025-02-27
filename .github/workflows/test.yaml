@@ -1,14 +1,19 @@
 name: Java Tests
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'src/**'
       - 'test/**'
-      - 'Dockerfile'
+      - 'Dockerfile*'
       - 'pom.xml'
   pull_request:
-    branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'Dockerfile*'
+      - 'pom.xml'
+    branches: [ master ]
 jobs:
   test:
     runs-on: ubuntu-24.04
