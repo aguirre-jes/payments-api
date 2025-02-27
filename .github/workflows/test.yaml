@@ -15,7 +15,8 @@ on:
       - 'pom.xml'
     branches: [ master ]
 jobs:
-  test:
+  run-tests:
+    name: Run Tests with TestContainers
     runs-on: ubuntu-24.04
     steps:
     - name: Checkout code
