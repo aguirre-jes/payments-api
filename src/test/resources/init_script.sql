@@ -1,5 +1,5 @@
 CREATE TABLE PAYMENTS (
-    id NUMBER PRIMARY KEY,
+    id NUMBER,
     amount DECIMAL(10, 2) NOT NULL,
     currency VARCHAR(3) NOT NULL,
     payment_date DATE NOT NULL,
@@ -8,7 +8,8 @@ CREATE TABLE PAYMENTS (
     payee_id NUMBER NOT NULL,
     payment_method VARCHAR(50),
     transaction_id VARCHAR(50),
-    description VARCHAR(255)
+    description VARCHAR(255),
+    CONSTRAINT pk_payments PRIMARY KEY (id)
 );
 
 -- Insert some data

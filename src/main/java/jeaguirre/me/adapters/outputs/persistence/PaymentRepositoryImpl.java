@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jeaguirre.me.adapters.outputs.persistence.entities.Payment;
+import jeaguirre.me.domains.exceptions.PaymentSaveException;
 import jeaguirre.me.domains.ports.PaymentRepository;
 
 @ApplicationScoped
@@ -21,7 +22,11 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     @Override
     @Transactional
     public void save(Payment payment) {
-        entityManager.persist(payment);
+        try {
+            entityManager.persist(payment);
+        } catch (Exception e) {
+            throw new PaymentSaveException("Error saving payment with ID: " + payment.getId(), e);
+        }
     }
 
     @Override
