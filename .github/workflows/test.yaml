@@ -2,6 +2,11 @@ name: Java Tests
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'Dockerfile'
+      - 'pom.xml'
   pull_request:
     branches: [ main ]
 jobs:
