@@ -13,8 +13,8 @@ CREATE TABLE PAYMENTS (
 
 -- Insert some data
 INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
-VALUES (1, 100.00, 'USD', '2025-02-26 10:00:00', 'Completed', 101, 201, 'Credit Card', 'TXN123456', 'Payment for invoice #123');
+VALUES (1, 100.00, 'USD', SYSDATE, 'Completed', 101, 201, 'Credit Card', 'TXN123456', 'Payment for invoice #123');
 INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
-VALUES (2, 250.50, 'EUR', '2025-02-26 11:00:00', 'Pending', 102, 202, 'Bank Transfer', 'TXN123457', 'Payment for invoice #124');
+VALUES (2, 250.50, 'EUR', SYSDATE, 'Pending', 102, 202, 'Bank Transfer', 'TXN123457', 'Payment for invoice #124');
 INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
-VALUES (3, 75.75, 'GBP', '2025-02-26 12:00:00', 'Failed', 103, 203, 'PayPal', 'TXN123458', 'Payment for invoice #125');
+VALUES (3, 75.75, 'GBP', SYSDATE, 'Failed', 103, 203, 'PayPal', 'TXN123458', 'Payment for invoice #125');
