@@ -31,7 +31,8 @@
 				"github.vscode-github-actions",
 				"redhat.vscode-yaml",
 				"redhat.vscode-xml",
-				"github.copilot"
+				"github.copilot",
+				"sonarsource.sonarlint-vscode"
 			]
 		}
 	},
