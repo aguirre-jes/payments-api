@@ -16,7 +16,7 @@ on:
     branches: [ master ]
 jobs:
   run-tests:
-    name: Run Tests with TestContainers
+    name: Run Tests
     runs-on: ubuntu-24.04
     steps:
     - name: Checkout code
@@ -27,5 +27,7 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Run Tests
-      run: mvn test
+    - name: Build and analyze
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=aguirre-jes_payments-api
