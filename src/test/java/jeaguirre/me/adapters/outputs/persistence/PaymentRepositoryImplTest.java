@@ -27,7 +27,7 @@ import jeaguirre.me.utils.OracleDbContainerExtension;
 class PaymentRepositoryImplTest {
 
     @Inject
-    private PaymentRepository paymentRepository;
+    PaymentRepository paymentRepository;
 
     @PersistenceContext(unitName = "pu1")
     private EntityManager entityManager;
@@ -37,7 +37,7 @@ class PaymentRepositoryImplTest {
     @BeforeEach
     void setUp() {
         payment = new Payment();
-        payment.setId(1);
+        payment.setId(4);
         payment.setAmount(new BigDecimal("100.00"));
         payment.setCurrency("USD");
         payment.setPaymentDate(LocalDateTime.now());
