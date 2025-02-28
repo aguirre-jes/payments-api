@@ -143,6 +143,15 @@ class PaymentRepositoryImplTest {
 
     @Test
     @Transactional
+    void deleteByIdWhenPaymentDoesNotExist() {
+        int nonExistentId = 999;
+        paymentRepository.deleteById(nonExistentId);
+        Optional<Payment> deletedPayment = paymentRepository.findById(nonExistentId);
+        assertTrue(deletedPayment.isEmpty());
+    }
+
+    @Test
+    @Transactional
     void findByStatus() {
         payment.setId(9);
         paymentRepository.save(payment);
