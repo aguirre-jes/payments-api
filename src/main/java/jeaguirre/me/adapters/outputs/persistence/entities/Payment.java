@@ -42,7 +42,6 @@ public class Payment {
     @Column(name = "description", length = 255)
     private String description;
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
