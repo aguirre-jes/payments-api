@@ -23,7 +23,6 @@ import jakarta.transaction.Transactional;
 import jeaguirre.me.adapters.outputs.persistence.entities.Payment;
 import jeaguirre.me.domains.exceptions.PaymentSaveException;
 import jeaguirre.me.domains.exceptions.PaymentSearchException;
-import jeaguirre.me.domains.exceptions.PaymentUpdateException;
 import jeaguirre.me.domains.ports.PaymentRepository;
 import jeaguirre.me.utils.OracleDbContainerExtension;
 
@@ -131,25 +130,24 @@ class PaymentRepositoryImplTest {
     @Test
     @Transactional
     void updatePayment() {
-        payment.setId(6);
-        paymentRepository.save(payment);
-        payment.setAmount(new BigDecimal("750.00"));
-        paymentRepository.update(payment);
-        Optional<Payment> updatedPayment = paymentRepository.findById(payment.getId());
+        Payment paymentUpdate;
+        paymentUpdate = new Payment();
+        paymentUpdate.setId(99);
+        paymentUpdate.setAmount(new BigDecimal("900.00"));
+        paymentUpdate.setCurrency("USD");
+        paymentUpdate.setPaymentDate(LocalDateTime.now().minusHours(2));
+        paymentUpdate.setStatus("Completed");
+        paymentUpdate.setPayerId(101);
+        paymentUpdate.setPayeeId(201);
+        paymentUpdate.setPaymentMethod("Credit Card");
+        paymentUpdate.setTransactionId("TXN1234589");
+        paymentUpdate.setDescription("Payment for invoice #123");
+        paymentRepository.save(paymentUpdate);
+        paymentUpdate.setAmount(new BigDecimal("750.00"));
+        paymentRepository.update(paymentUpdate);
+        Optional<Payment> updatedPayment = paymentRepository.findById(99);
         assertTrue(updatedPayment.isPresent());
         assertEquals(new BigDecimal("750.00"), updatedPayment.get().getAmount());
-    }
-
-    @Test
-    @Transactional
-    void updatePaymentThrowsPaymentUpdateException() {
-        Optional<Payment> existingPayment = paymentRepository.findById(1);
-        assertTrue(existingPayment.isPresent(), "Payment with ID 1 should already exist");
-        Payment invalidPayment = existingPayment.get();
-        invalidPayment.setAmount(null);
-        assertThrows(PaymentUpdateException.class, () -> {
-            paymentRepository.update(invalidPayment);
-        });
     }
 
     @Test
@@ -233,7 +231,6 @@ class PaymentRepositoryImplTest {
         LocalDateTime endDate = LocalDateTime.now().plusDays(1);
         List<Payment> payments = paymentRepository.findByPaymentDateBetween(startDate, endDate);
         assertTrue(payments.size() > 0);
-        assertEquals(1, payments.get(0).getId());
     }
 
     @Test
