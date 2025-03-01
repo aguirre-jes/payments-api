@@ -22,6 +22,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jeaguirre.me.adapters.outputs.persistence.entities.Payment;
 import jeaguirre.me.domains.exceptions.PaymentSaveException;
+import jeaguirre.me.domains.exceptions.PaymentSearchException;
+import jeaguirre.me.domains.exceptions.PaymentUpdateException;
 import jeaguirre.me.domains.ports.PaymentRepository;
 import jeaguirre.me.utils.OracleDbContainerExtension;
 
@@ -112,52 +114,80 @@ class PaymentRepositoryImplTest {
     @Test
     @Transactional
     void findById() {
-        payment.setId(6);
-        paymentRepository.save(payment);
-        Optional<Payment> retrievedPayment = paymentRepository.findById(payment.getId());
+        Optional<Payment> retrievedPayment = paymentRepository.findById(1);
         assertTrue(retrievedPayment.isPresent());
-        assertEquals(payment.getId(), retrievedPayment.get().getId());
+        assertEquals(1, retrievedPayment.get().getId());
+    }
+
+    @Test
+    @Transactional
+    void findByIdThrowsPaymentSearchException() {
+        int nonExistentId = 999;
+        assertThrows(PaymentSearchException.class, () -> {
+            paymentRepository.findById(nonExistentId);
+        });
     }
 
     @Test
     @Transactional
     void updatePayment() {
-        payment.setId(7);
+        payment.setId(6);
         paymentRepository.save(payment);
-        payment.setAmount(new BigDecimal("150.00"));
+        payment.setAmount(new BigDecimal("750.00"));
         paymentRepository.update(payment);
         Optional<Payment> updatedPayment = paymentRepository.findById(payment.getId());
         assertTrue(updatedPayment.isPresent());
-        assertEquals(new BigDecimal("150.00"), updatedPayment.get().getAmount());
+        assertEquals(new BigDecimal("750.00"), updatedPayment.get().getAmount());
+    }
+
+    @Test
+    @Transactional
+    void updatePaymentThrowsPaymentUpdateException() {
+        Optional<Payment> existingPayment = paymentRepository.findById(1);
+        assertTrue(existingPayment.isPresent(), "Payment with ID 1 should already exist");
+        Payment invalidPayment = existingPayment.get();
+        invalidPayment.setAmount(null);
+        assertThrows(PaymentUpdateException.class, () -> {
+            paymentRepository.update(invalidPayment);
+        });
     }
 
     @Test
     @Transactional
     void deleteById() {
-        payment.setId(8);
-        paymentRepository.save(payment);
-        paymentRepository.deleteById(payment.getId());
-        Optional<Payment> deletedPayment = paymentRepository.findById(payment.getId());
-        assertTrue(deletedPayment.isEmpty());
+        Optional<Payment> existingPayment = paymentRepository.findById(1);
+        assertTrue(existingPayment.isPresent(), "Payment with ID 1 should already exist");
+        paymentRepository.deleteById(1);
+        assertThrows(PaymentSearchException.class, () -> {
+            paymentRepository.findById(1);
+        });
     }
 
     @Test
     @Transactional
     void deleteByIdWhenPaymentDoesNotExist() {
         int nonExistentId = 999;
-        paymentRepository.deleteById(nonExistentId);
-        Optional<Payment> deletedPayment = paymentRepository.findById(nonExistentId);
-        assertTrue(deletedPayment.isEmpty());
+        assertThrows(PaymentSearchException.class, () -> {
+            paymentRepository.deleteById(nonExistentId);
+        });
     }
 
     @Test
     @Transactional
     void findByStatus() {
-        payment.setId(9);
+        payment.setId(6);
         paymentRepository.save(payment);
         List<Payment> payments = paymentRepository.findByStatus("Completed");
         assertTrue(payments.size() > 0);
         assertEquals("Completed", payments.get(0).getStatus());
+    }
+
+    @Test
+    @Transactional
+    void findByStatusThrowsPaymentSearchException() {
+        assertThrows(PaymentSearchException.class, () -> {
+            paymentRepository.findByStatus("NonExistentStatus");
+        });
     }
 
     @Test
@@ -172,12 +202,28 @@ class PaymentRepositoryImplTest {
 
     @Test
     @Transactional
+    void findByPayerIdThrowsPaymentSearchException() {
+        assertThrows(PaymentSearchException.class, () -> {
+            paymentRepository.findByPayerId(999);
+        });
+    }
+
+    @Test
+    @Transactional
     void findByPayeeId() {
         payment.setId(11);
         paymentRepository.save(payment);
         List<Payment> payments = paymentRepository.findByPayeeId(201);
         assertTrue(payments.size() > 0);
         assertEquals(201, payments.get(0).getPayeeId());
+    }
+
+    @Test
+    @Transactional
+    void findByPayeeIdThrowsPaymentSearchException() {
+        assertThrows(PaymentSearchException.class, () -> {
+            paymentRepository.findByPayeeId(999);
+        });
     }
 
     @Test
@@ -190,4 +236,13 @@ class PaymentRepositoryImplTest {
         assertEquals(1, payments.get(0).getId());
     }
 
+    @Test
+    @Transactional
+    void findByPaymentDateBetweenThrowsPaymentSearchException() {
+        LocalDateTime startDate = LocalDateTime.of(2025, 1, 1, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2025, 1, 31, 23, 59);
+        assertThrows(PaymentSearchException.class, () -> {
+            paymentRepository.findByPaymentDateBetween(startDate, endDate);
+        });
+    }
 }

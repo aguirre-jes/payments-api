@@ -6,23 +6,23 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-class PaymentSaveExceptionTest {
+class PaymentSearchExceptionTest {
 
     @Test
-    void paymentSaveExceptionMessage() {
-        String errorMessage = "Error saving payment";
-        PaymentSaveException exception = assertThrows(PaymentSaveException.class, () -> {
-            throw new PaymentSaveException(errorMessage, null);
+    void paymentSearchExceptionMessage() {
+        String errorMessage = "Error finding payment";
+        PaymentSearchException exception = assertThrows(PaymentSearchException.class, () -> {
+            throw new PaymentSearchException(errorMessage, null);
         });
         assertEquals(errorMessage, exception.getMessage());
     }
 
     @Test
-    void paymentSaveExceptionCause() {
-        String errorMessage = "Error saving payment";
+    void paymentSearchExceptionCause() {
+        String errorMessage = "Error finding payment";
         Throwable cause = new RuntimeException("Underlying cause");
-        PaymentSaveException exception = assertThrows(PaymentSaveException.class, () -> {
-            throw new PaymentSaveException(errorMessage, cause);
+        PaymentSearchException exception = assertThrows(PaymentSearchException.class, () -> {
+            throw new PaymentSearchException(errorMessage, cause);
         });
         assertEquals(errorMessage, exception.getMessage());
         assertNotNull(exception.getCause());
@@ -30,10 +30,10 @@ class PaymentSaveExceptionTest {
     }
 
     @Test
-    void paymentSaveExceptionMessageAndCause() {
-        String errorMessage = "Error saving payment";
+    void paymentSearchExceptionMessageAndCause() {
+        String errorMessage = "Error finding payment";
         Throwable cause = new RuntimeException("Underlying cause");
-        PaymentSaveException exception = new PaymentSaveException(errorMessage, cause);
+        PaymentSearchException exception = new PaymentSearchException(errorMessage, cause);
         assertEquals(errorMessage, exception.getMessage());
         assertEquals(cause, exception.getCause());
     }
