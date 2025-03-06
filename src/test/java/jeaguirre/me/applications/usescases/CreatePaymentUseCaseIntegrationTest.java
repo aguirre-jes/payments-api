@@ -49,7 +49,7 @@ class CreatePaymentUseCaseIntegrationTest {
 
     @Test
     @Transactional
-    void execute_shouldSavePaymentWithNullOptionalFields() {
+    void executeShouldSavePaymentWithNullOptionalFields() {
         Payment paymentWithNulls = new Payment();
         paymentWithNulls.setId(31);
         paymentWithNulls.setAmount(new BigDecimal("200.25"));
@@ -82,7 +82,7 @@ class CreatePaymentUseCaseIntegrationTest {
 
     @Test
     @Transactional
-    void execute_shouldThrowExceptionWhenSavingDuplicateId() {
+    void executeShouldThrowExceptionWhenSavingDuplicateId() {
         createPaymentUseCase.execute(payment);
 
         Payment duplicatePayment = new Payment();
@@ -104,7 +104,7 @@ class CreatePaymentUseCaseIntegrationTest {
 
     @Test
     @Transactional
-    void execute_shouldSaveMultiplePayments() {
+    void executeShouldSaveMultiplePayments() {
         Payment payment1 = new Payment();
         payment1.setId(32);
         payment1.setAmount(new BigDecimal("50.00"));
@@ -148,7 +148,7 @@ class CreatePaymentUseCaseIntegrationTest {
 
     @Test
     @Transactional
-    void execute_shouldPreserveAllPaymentData() {
+    void executeShouldPreserveAllPaymentData() {
         LocalDateTime specificDate = LocalDateTime.of(2023, 10, 15, 14, 30, 0);
         payment.setPaymentDate(specificDate);
 

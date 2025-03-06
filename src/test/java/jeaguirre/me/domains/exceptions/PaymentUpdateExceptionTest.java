@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PaymentUpdateExceptionTest {
 
     @Test
-    void constructor_shouldCreateExceptionWithMessageAndCause() {
+    void constructorShouldCreateExceptionWithMessageAndCause() {
         String errorMessage = "Error updating payment";
         Throwable cause = new RuntimeException("Original error");
 
@@ -23,7 +23,7 @@ class PaymentUpdateExceptionTest {
     }
 
     @Test
-    void constructor_shouldCreateExceptionWithMessageAndNullCause() {
+    void constructorShouldCreateExceptionWithMessageAndNullCause() {
         String errorMessage = "Payment update failed";
 
         PaymentUpdateException exception = new PaymentUpdateException(errorMessage, null);
@@ -34,7 +34,7 @@ class PaymentUpdateExceptionTest {
     }
 
     @Test
-    void exception_shouldBeRuntimeException() {
+    void exceptionShouldBeRuntimeException() {
         PaymentUpdateException exception = new PaymentUpdateException("Test exception", null);
 
         assertNotNull(exception);
@@ -42,7 +42,7 @@ class PaymentUpdateExceptionTest {
     }
 
     @Test
-    void exceptionThrown_shouldBeCaughtAsRuntimeException() {
+    void exceptionThrownShouldBeCaughtAsRuntimeException() {
         String errorMessage = "Payment update error";
 
         RuntimeException caughtException = assertThrows(RuntimeException.class, () -> {
