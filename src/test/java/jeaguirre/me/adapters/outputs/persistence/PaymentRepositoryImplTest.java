@@ -153,11 +153,11 @@ class PaymentRepositoryImplTest {
     @Test
     @Transactional
     void deleteById() {
-        Optional<Payment> existingPayment = paymentRepository.findById(1);
-        assertTrue(existingPayment.isPresent(), "Payment with ID 1 should already exist");
-        paymentRepository.deleteById(1);
+        Optional<Payment> existingPayment = paymentRepository.findById(3);
+        assertTrue(existingPayment.isPresent(), "Payment with ID 3 should already exist");
+        paymentRepository.deleteById(3);
         assertThrows(PaymentSearchException.class, () -> {
-            paymentRepository.findById(1);
+            paymentRepository.findById(3);
         });
     }
 

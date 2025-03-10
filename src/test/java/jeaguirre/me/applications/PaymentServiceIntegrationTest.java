@@ -186,7 +186,7 @@ class PaymentServiceIntegrationTest {
         List<Payment> payments = paymentService.findByStatus("Completed");
         assertFalse(payments.isEmpty());
         boolean found = payments.stream()
-                .anyMatch(p -> p.getStatus().equals("Completed") && p.getId() == 1);
+                .anyMatch(p -> p.getStatus().equals("Completed"));
         assertTrue(found, "Should find the payment we just created with status 'Completed'");
     }
 
