@@ -1,13 +1,6 @@
 name: Java Tests
 on:
-  push:
   workflow_dispatch:
-    branches: [ master ]
-    paths:
-      - 'src/**'
-      - 'test/**'
-      - 'Dockerfile*'
-      - 'pom.xml'
   pull_request:
     paths:
       - 'src/**'
