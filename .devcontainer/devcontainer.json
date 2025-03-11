@@ -6,7 +6,7 @@
 	"image": "mcr.microsoft.com/devcontainers/java:1-21",
 
 	// For more information about features check: https://github.com/devcontainers/features/tree/main/src/java
-	"features": {
+	"features": {   
 		"ghcr.io/devcontainers/features/java:1": {
 			"version": "21",
 			"installMaven": "true",
@@ -15,7 +15,9 @@
 		},
         "ghcr.io/devcontainers/features/docker-in-docker:2": {
             "version": "latest"
-        }
+        },
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+		"ghcr.io/devcontainers/features/node:1": {}
 	},
 
 	// Configure tool-specific properties.
