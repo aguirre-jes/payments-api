@@ -2,59 +2,24 @@
 
 # payments-api-mp
 
-Helidon MP application that uses the dbclient API with OracleDB database.
+A Helidon MP application for managing payments, utilizing a hexagonal architecture and clean architecture principles. This project includes RESTful APIs, domain-driven design.
 
 ## Build and run
 
+With JDK23
 
-With JDK21
 ```bash
 mvn package
 java -jar target/payments-api-mp.jar
 ```
 
-## Exercise the application
-
-Basic:
-```
-curl -X GET http://localhost:8080/simple-greet
-Hello World!
-```
-
-
-JSON:
-```
-curl -X GET http://localhost:8080/greet
-{"message":"Hello World!"}
-
-curl -X GET http://localhost:8080/greet/Joe
-{"message":"Hello Joe!"}
-
-curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Hola"}' http://localhost:8080/greet/greeting
-
-curl -X GET http://localhost:8080/greet/Jose
-{"message":"Hola Jose!"}
-```
-
-```
-curl -X GET http://localhost:8080/pokemon
-[{"id":1,"type":12,"name":"Bulbasaur"}, ...]
-
-curl -X GET http://localhost:8080/type
-[{"id":1,"name":"Normal"}, ...]
-
-curl -H "Content-Type: application/json" --request POST --data '{"id":100, "type":1, "name":"Test"}' http://localhost:8080/pokemon
-```
-
-
 ## Try health
 
-```
+```bash
 curl -s -X GET http://localhost:8080/health
 {"outcome":"UP",...
 
 ```
-
 
 ## Building a Native Image
 
@@ -62,7 +27,7 @@ The generation of native binaries requires an installation of GraalVM 22.1.0+.
 
 You can build a native binary using Maven as follows:
 
-```
+```bash
 mvn -Pnative-image install -DskipTests
 ```
 
@@ -71,11 +36,9 @@ your hardware and operating system. When completed, the executable file will be 
 under the `target` directory and be named after the artifact ID you have chosen during the
 project generation phase.
 
-
-
 ## Try metrics
 
-```
+```bash
 # Prometheus Format
 curl -s -X GET http://localhost:8080/metrics
 # TYPE base:gc_g1_young_generation_count gauge
@@ -87,8 +50,6 @@ curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 . . .
 ```
 
-
-
 ### Database Setup
 
 Start your database before running this example.
@@ -96,27 +57,26 @@ Start your database before running this example.
 Example docker commands to start databases in temporary containers:
 
 Oracle:
-```
+
+```bash
 docker run --rm --name xe -p 1521:1521 -p 8888:8080 wnameless/oracle-xe-11g-r2
 ```
+
 For details on an Oracle Docker image, see https://github.com/oracle/docker-images/tree/master/OracleDatabase/SingleInstance
-
-
 
 ## Building the Docker Image
 
-```
+```bash
 docker build -t payments-api-mp .
 ```
 
 ## Running the Docker Image
 
-```
+```bash
 docker run --rm -p 8080:8080 payments-api-mp:latest
 ```
 
 Exercise the application as described above.
-                                
 
 ## Run the application in Kubernetes
 
@@ -124,14 +84,14 @@ If you don’t have access to a Kubernetes cluster, you can [install one](https:
 
 ### Verify connectivity to cluster
 
-```
+```bash
 kubectl cluster-info                        # Verify which cluster
 kubectl get pods                            # Verify connectivity to cluster
 ```
 
 ### Deploy the application to Kubernetes
 
-```
+```bash
 kubectl create -f app.yaml                              # Deploy application
 kubectl get pods                                        # Wait for quickstart pod to be RUNNING
 kubectl get service  payments-api-mp                     # Get service info
@@ -142,16 +102,15 @@ You can now exercise the application as you did before but use the port number 8
 
 After you’re done, cleanup.
 
-```
+```bash
 kubectl delete -f app.yaml
 ```
-
 
 ## Building a Custom Runtime Image
 
 Build the custom runtime image using the jlink image profile:
 
-```
+```bash
 mvn package -Pjlink-image
 ```
 
@@ -161,7 +120,7 @@ After the build completes it will report some statistics about the build includi
 The target/payments-api-mp-jri directory is a self contained custom image of your application. It contains your application,
 its runtime dependencies and the JDK modules it depends on. You can start your application using the provide start script:
 
-```
+```bash
 ./target/payments-api-mp-jri/bin/start
 ```
 
@@ -175,9 +134,8 @@ The size of the CDS archive is reported at the end of the build output.
 If you’d rather have a smaller image size (with a slightly increased startup time) you can skip the creation of the CDS
 archive by executing your build like this:
 
-```
+```bash
 mvn package -Pjlink-image -Djlink.image.addClassDataSharingArchive=false
 ```
 
 For more information on available configuration options see the helidon-maven-plugin documentation.
-                                
