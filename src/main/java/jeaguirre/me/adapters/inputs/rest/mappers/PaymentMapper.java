@@ -10,6 +10,7 @@ public class PaymentMapper {
 
     public Payment toEntity(CreatePaymentRequest requestDto) {
         Payment payment = new Payment();
+        payment.setId(requestDto.getId());
         payment.setAmount(requestDto.getAmount());
         payment.setCurrency(requestDto.getCurrency());
         payment.setPaymentDate(requestDto.getPaymentDate());
