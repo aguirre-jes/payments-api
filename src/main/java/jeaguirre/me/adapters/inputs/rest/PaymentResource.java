@@ -28,17 +28,43 @@ import jeaguirre.me.adapters.inputs.rest.dto.CreatePaymentRequest;
 import jeaguirre.me.adapters.inputs.rest.dto.PaymentResponse;
 import jeaguirre.me.adapters.inputs.rest.mappers.PaymentMapper;
 import jeaguirre.me.adapters.outputs.persistence.entities.Payment;
-import jeaguirre.me.applications.PaymentService;
+import jeaguirre.me.applications.usescases.CreatePaymentUseCase;
+import jeaguirre.me.applications.usescases.DeletePaymentUseCase;
+import jeaguirre.me.applications.usescases.FindPaymentsByDateRangeUseCase;
+import jeaguirre.me.applications.usescases.FindPaymentsByPayeeIdUseCase;
+import jeaguirre.me.applications.usescases.FindPaymentsByPayerIdUseCase;
+import jeaguirre.me.applications.usescases.FindPaymentsByStatusUseCase;
+import jeaguirre.me.applications.usescases.GetPaymentByIdUseCase;
+import jeaguirre.me.applications.usescases.UpdatePaymentUseCase;
 
 @Path("/payments")
 public class PaymentResource {
 
-    private final PaymentService paymentService;
+    private final CreatePaymentUseCase createPaymentUseCase;
+    private final GetPaymentByIdUseCase getPaymentByIdUseCase;
+    private final UpdatePaymentUseCase updatePaymentUseCase;
+    private final DeletePaymentUseCase deletePaymentUseCase;
+    private final FindPaymentsByStatusUseCase findPaymentsByStatusUseCase;
+    private final FindPaymentsByPayerIdUseCase findPaymentsByPayerIdUseCase;
+    private final FindPaymentsByPayeeIdUseCase findPaymentsByPayeeIdUseCase;
+    private final FindPaymentsByDateRangeUseCase findPaymentsByDateRangeUseCase;
     private final PaymentMapper paymentMapper;
 
     @Inject
-    public PaymentResource(PaymentService paymentService, PaymentMapper paymentMapper) {
-        this.paymentService = paymentService;
+    public PaymentResource(PaymentMapper paymentMapper, CreatePaymentUseCase createPaymentUseCase,
+            GetPaymentByIdUseCase getPaymentByIdUseCase, UpdatePaymentUseCase updatePaymentUseCase,
+            DeletePaymentUseCase deletePaymentUseCase, FindPaymentsByStatusUseCase findPaymentsByStatusUseCase,
+            FindPaymentsByPayerIdUseCase findPaymentsByPayerIdUseCase,
+            FindPaymentsByPayeeIdUseCase findPaymentsByPayeeIdUseCase,
+            FindPaymentsByDateRangeUseCase findPaymentsByDateRangeUseCase) {
+        this.createPaymentUseCase = createPaymentUseCase;
+        this.getPaymentByIdUseCase = getPaymentByIdUseCase;
+        this.updatePaymentUseCase = updatePaymentUseCase;
+        this.deletePaymentUseCase = deletePaymentUseCase;
+        this.findPaymentsByStatusUseCase = findPaymentsByStatusUseCase;
+        this.findPaymentsByPayerIdUseCase = findPaymentsByPayerIdUseCase;
+        this.findPaymentsByPayeeIdUseCase = findPaymentsByPayeeIdUseCase;
+        this.findPaymentsByDateRangeUseCase = findPaymentsByDateRangeUseCase;
         this.paymentMapper = paymentMapper;
     }
 
@@ -49,7 +75,7 @@ public class PaymentResource {
     @APIResponse(description = "Details of the created payment", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PaymentResponse.class)))
     public Response createPayment(CreatePaymentRequest request) {
         Payment payment = paymentMapper.toEntity(request);
-        paymentService.savePayment(payment);
+        createPaymentUseCase.execute(payment);
         PaymentResponse response = paymentMapper.toResponse(payment);
         return Response.status(Response.Status.CREATED).entity(response).build();
     }
@@ -62,7 +88,7 @@ public class PaymentResource {
     @APIResponse(responseCode = "404", description = "Payment not found")
     public Response getPaymentById(@PathParam("id") int id) {
         try {
-            Payment payment = paymentService.getPaymentById(id);
+            Payment payment = getPaymentByIdUseCase.execute(id);
             PaymentResponse response = paymentMapper.toResponse(payment);
             return Response.ok(response).build();
         } catch (RuntimeException e) {
@@ -82,14 +108,14 @@ public class PaymentResource {
     public Response updatePayment(@PathParam("id") int id, CreatePaymentRequest request) {
         try {
             // Verify payment exists
-            paymentService.getPaymentById(id);
+            getPaymentByIdUseCase.execute(id);
 
             // Map request to entity
             Payment payment = paymentMapper.toEntity(request);
             payment.setId(id);
 
             // Update payment
-            paymentService.update(payment);
+            updatePaymentUseCase.execute(payment);
 
             // Return updated payment
             PaymentResponse response = paymentMapper.toResponse(payment);
@@ -109,10 +135,10 @@ public class PaymentResource {
     public Response deletePayment(@PathParam("id") int id) {
         try {
             // Verify payment exists
-            paymentService.getPaymentById(id);
+            getPaymentByIdUseCase.execute(id);
 
             // Delete payment
-            paymentService.deleteById(id);
+            deletePaymentUseCase.execute(id);
 
             return Response.noContent().build();
         } catch (RuntimeException e) {
@@ -128,7 +154,7 @@ public class PaymentResource {
     @Operation(summary = "Find payments by status", description = "Returns all payments with the specified status")
     @APIResponse(description = "List of payments", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PaymentResponse.class)))
     public Response findByStatus(@PathParam("status") String status) {
-        List<Payment> payments = paymentService.findByStatus(status);
+        List<Payment> payments = findPaymentsByStatusUseCase.execute(status);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
                 .collect(Collectors.toList());
@@ -141,7 +167,7 @@ public class PaymentResource {
     @Operation(summary = "Find payments by payer ID", description = "Returns all payments made by the specified payer")
     @APIResponse(description = "List of payments", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PaymentResponse.class)))
     public Response findByPayerId(@PathParam("payerId") int payerId) {
-        List<Payment> payments = paymentService.findByPayerId(payerId);
+        List<Payment> payments = findPaymentsByPayerIdUseCase.execute(payerId);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
                 .collect(Collectors.toList());
@@ -154,7 +180,7 @@ public class PaymentResource {
     @Operation(summary = "Find payments by payee ID", description = "Returns all payments received by the specified payee")
     @APIResponse(description = "List of payments", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PaymentResponse.class)))
     public Response findByPayeeId(@PathParam("payeeId") int payeeId) {
-        List<Payment> payments = paymentService.findByPayeeId(payeeId);
+        List<Payment> payments = findPaymentsByPayeeIdUseCase.execute(payeeId);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
                 .collect(Collectors.toList());
@@ -173,7 +199,7 @@ public class PaymentResource {
         LocalDateTime startDate = LocalDateTime.parse(startDateStr);
         LocalDateTime endDate = LocalDateTime.parse(endDateStr);
 
-        List<Payment> payments = paymentService.findByPaymentDateBetween(startDate, endDate);
+        List<Payment> payments = findPaymentsByDateRangeUseCase.execute(startDate, endDate);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
                 .collect(Collectors.toList());
