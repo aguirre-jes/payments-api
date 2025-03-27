@@ -2,6 +2,12 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
+
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
+
 ## Overview
 
 A Helidon MP application for managing payments, utilizing a hexagonal architecture and clean architecture principles. This project includes RESTful APIs, domain-driven design.
