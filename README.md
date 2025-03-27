@@ -1,12 +1,6 @@
 # Payments API MP
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
-
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
-
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
-
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
 
 ## Overview
 
@@ -72,7 +66,7 @@ Oracle:
 docker run --rm --name xe -p 1521:1521 -p 8888:8080 wnameless/oracle-xe-11g-r2
 ```
 
-For details on an Oracle Docker image, see https://github.com/oracle/docker-images/tree/master/OracleDatabase/SingleInstance
+For details on an Oracle Docker image, see [Oracle Images Container](https://github.com/oracle/docker-images/tree/master/OracleDatabase/SingleInstance)
 
 ## Building the Docker Image
 
