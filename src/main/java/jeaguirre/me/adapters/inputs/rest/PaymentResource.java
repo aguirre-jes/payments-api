@@ -3,7 +3,6 @@ package jeaguirre.me.adapters.inputs.rest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -50,6 +49,8 @@ public class PaymentResource {
     private final FindPaymentsByDateRangeUseCase findPaymentsByDateRangeUseCase;
     private final PaymentMapper paymentMapper;
 
+    private static final String ERROR_KEY = "error";
+
     @Inject
     public PaymentResource(PaymentMapper paymentMapper, CreatePaymentUseCase createPaymentUseCase,
             GetPaymentByIdUseCase getPaymentByIdUseCase, UpdatePaymentUseCase updatePaymentUseCase,
@@ -93,7 +94,7 @@ public class PaymentResource {
             return Response.ok(response).build();
         } catch (RuntimeException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(Map.of("error", e.getMessage()))
+                    .entity(Map.of(ERROR_KEY, e.getMessage()))
                     .build();
         }
     }
@@ -122,7 +123,7 @@ public class PaymentResource {
             return Response.ok(response).build();
         } catch (RuntimeException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(Map.of("error", e.getMessage()))
+                    .entity(Map.of(ERROR_KEY, e.getMessage()))
                     .build();
         }
     }
@@ -143,7 +144,7 @@ public class PaymentResource {
             return Response.noContent().build();
         } catch (RuntimeException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(Map.of("error", e.getMessage()))
+                    .entity(Map.of(ERROR_KEY, e.getMessage()))
                     .build();
         }
     }
@@ -157,7 +158,7 @@ public class PaymentResource {
         List<Payment> payments = findPaymentsByStatusUseCase.execute(status);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
-                .collect(Collectors.toList());
+                .toList();
         return Response.ok(responseList).build();
     }
 
@@ -170,7 +171,7 @@ public class PaymentResource {
         List<Payment> payments = findPaymentsByPayerIdUseCase.execute(payerId);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
-                .collect(Collectors.toList());
+                .toList();
         return Response.ok(responseList).build();
     }
 
@@ -183,7 +184,7 @@ public class PaymentResource {
         List<Payment> payments = findPaymentsByPayeeIdUseCase.execute(payeeId);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
-                .collect(Collectors.toList());
+                .toList();
         return Response.ok(responseList).build();
     }
 
@@ -202,7 +203,7 @@ public class PaymentResource {
         List<Payment> payments = findPaymentsByDateRangeUseCase.execute(startDate, endDate);
         List<PaymentResponse> responseList = payments.stream()
                 .map(paymentMapper::toResponse)
-                .collect(Collectors.toList());
+                .toList();
         return Response.ok(responseList).build();
     }
 }
