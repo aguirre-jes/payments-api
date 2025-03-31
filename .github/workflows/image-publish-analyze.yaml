@@ -4,7 +4,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  verify-base-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.8.1
+        with:
+          cosign-release: 'v2.4.3'
+          
+      - name: Verify Distroless Base Image Signature
+        run: |
+          IMAGE_NAME="gcr.io/distroless/java-base-debian12:latest"
+          cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com --certificate-identity keyless@distroless.iam.gserviceaccount.com
   build-and-push:
+    needs: verify-base-image
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -25,7 +38,7 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           file: Dockerfile.jlink
           cache-from: type=gha
           cache-to: type=gha,mode=max
