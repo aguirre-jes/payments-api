@@ -18,7 +18,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.REGISTRY_TOKEN }}
+          password: ${{ secrets.REGISTRY_TOKEN_PAYMENT_API }}
           
       - name: Build and push image container to GitHub Container Registry
         uses: docker/build-push-action@v6.15.0
