@@ -17,10 +17,10 @@ jobs:
       uses: actions/checkout@v4.2.2
       with:
           fetch-depth: 0
-    - name: Set up JDK 23
+    - name: Set up JDK
       uses: actions/setup-java@v4.7.0
       with:
-        java-version: '23'
+        java-version: '24'
         distribution: 'temurin'
         cache: maven
     - name: Build and analyze
@@ -28,4 +28,3 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.0.4389:sonar -Dsonar.projectKey=aguirre-jes_payments-api
-
