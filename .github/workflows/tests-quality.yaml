@@ -1,7 +1,7 @@
-name: Tests Java
+name: Quality Tests Java
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     paths:
       - 'src/**'
       - 'test/**'
@@ -23,5 +23,9 @@ jobs:
         java-version: '23'
         distribution: 'temurin'
         cache: maven
-    - name: Execute Tests
-      run: mvn -B test
+    - name: Build and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.0.4389:sonar -Dsonar.projectKey=aguirre-jes_payments-api
+
