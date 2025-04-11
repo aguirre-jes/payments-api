@@ -1,14 +1,16 @@
 
 # 1st stage, build the app
-FROM container-registry.oracle.com/java/jdk-no-fee-term:23 AS build
+FROM container-registry.oracle.com/java/jdk-no-fee-term:24 AS build
 
 WORKDIR /usr/share
 
-# Install maven
+# Install maven with integrity verification
 RUN set -x && \
     curl -O https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz && \
+    curl -O https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz.sha512 && \
+    echo "$(cat apache-maven-3.9.9-bin.tar.gz.sha512) apache-maven-3.9.9-bin.tar.gz" | sha512sum -c - && \
     tar -xvf apache-maven-*-bin.tar.gz  && \
-    rm apache-maven-*-bin.tar.gz && \
+    rm apache-maven-*-bin.tar.gz apache-maven-*-bin.tar.gz.sha512 && \
     mv apache-maven-* maven && \
     ln -s /usr/share/maven/bin/mvn /bin/
 
@@ -23,13 +25,28 @@ RUN mvn package -Dmaven.test.skip -Declipselink.weave.skip
 # Do the Maven build to create the custom Java Runtime Image
 # Incremental docker builds will resume here when you change sources
 COPY src src
-RUN mvn package -Pjlink-image -DskipTests
-RUN echo "done!"
+RUN mvn package -Pjlink-image -DskipTests \
+  -Djlink.image.addClassDataSharingArchive=false \
+  -Djlink.image.testImage=false && \
+  echo "done!"
 
 # 2nd stage, build the final image with the JRI built in the 1st stage
+FROM gcr.io/distroless/java-base-debian12:latest
 
-FROM debian:stretch-slim
 WORKDIR /helidon
+
 COPY --from=build /helidon/target/payments-api-mp-jri ./
-ENTRYPOINT ["/bin/bash", "/helidon/bin/start"]
+
+ENTRYPOINT ["/helidon/bin/java", \
+  # G1 ya estará activo por defecto, pero puedes especificarlo explícitamente
+  "-XX:+UseG1GC", \
+  # Ajustar para latencia más predecible
+  "-XX:MaxGCPauseMillis=100", \
+  # Establecer tamaños fijos para evitar redimensionamientos costosos
+  "-Xms256m", \
+  "-Xmx256m", \
+  # Otros parámetros de ajuste
+  "-XX:+ParallelRefProcEnabled", \
+  "-jar", "/helidon/app/payments-api-mp.jar"]
+
 EXPOSE 8080

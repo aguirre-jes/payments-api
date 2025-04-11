@@ -42,7 +42,7 @@ class PaymentRepositoryImplTest {
     @BeforeEach
     void setUp() {
         payment = new Payment();
-        payment.setId(4);
+        payment.setId(8);
         payment.setAmount(new BigDecimal("100.00"));
         payment.setCurrency("USD");
         payment.setPaymentDate(LocalDateTime.now().minusHours(1));
@@ -50,7 +50,7 @@ class PaymentRepositoryImplTest {
         payment.setPayerId(101);
         payment.setPayeeId(201);
         payment.setPaymentMethod("Credit Card");
-        payment.setTransactionId("TXN123456");
+        payment.setTransactionId("TXN123471");
         payment.setDescription("Payment for invoice #123");
     }
 
@@ -67,7 +67,7 @@ class PaymentRepositoryImplTest {
     @Transactional
     void savePaymentWithNullValues() {
         Payment paymentWithNulls = new Payment();
-        paymentWithNulls.setId(5);
+        paymentWithNulls.setId(9);
         paymentWithNulls.setAmount(new BigDecimal("50.00"));
         paymentWithNulls.setCurrency("USD");
         paymentWithNulls.setPaymentDate(LocalDateTime.now());
@@ -173,8 +173,6 @@ class PaymentRepositoryImplTest {
     @Test
     @Transactional
     void findByStatus() {
-        payment.setId(6);
-        paymentRepository.save(payment);
         List<Payment> payments = paymentRepository.findByStatus("Completed");
         assertTrue(payments.size() > 0);
         assertEquals("Completed", payments.get(0).getStatus());

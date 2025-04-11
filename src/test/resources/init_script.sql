@@ -19,3 +19,11 @@ INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, paye
 VALUES (2, 250.50, 'EUR', SYSDATE, 'Pending', 102, 202, 'Bank Transfer', 'TXN123457', 'Payment for invoice #124');
 INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
 VALUES (3, 75.75, 'GBP', SYSDATE, 'Failed', 103, 203, 'PayPal', 'TXN123458', 'Payment for invoice #125');
+INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
+VALUES (4, 75.75, 'GBP', SYSDATE, 'Completed', 103, 203, 'PayPal', 'TXN123459', 'Payment for invoice #124');
+INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
+VALUES (5, 75.75, 'GBP', SYSDATE, 'Completed', 103, 203, 'PayPal', 'TXN123460', 'Payment for invoice #125');
+INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
+VALUES (6, 75.75, 'GBP', SYSDATE, 'Completed', 103, 203, 'PayPal', 'TXN123461', 'Payment for invoice #126');
+INSERT INTO PAYMENTS (id, amount, currency, payment_date, status, payer_id, payee_id, payment_method, transaction_id, description) 
+VALUES (7, 75.75, 'GBP', SYSDATE, 'Pending', 103, 203, 'PayPal', 'TXN123462', 'Payment for invoice #127');
