@@ -1,8 +1,12 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
+# Payments API MP
 
-# payments-api-mp
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Tests Java](https://github.com/aguirre-jes/payments-api/actions/workflows/tests.yaml/badge.svg)](https://github.com/aguirre-jes/payments-api/actions/workflows/tests.yaml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
+
+## Overview
 
 A Helidon MP application for managing payments, utilizing a hexagonal architecture and clean architecture principles. This project includes RESTful APIs, domain-driven design.
+
+[![Helidon Payments API MP](https://mermaid.ink/img/pako:eNqllE2P2jAQhv-K5b20UqAkAQJRtVKCqYSEtAgWVWrTg0kcsOrYke20yyL-e50PAqHd9lAfosx45vGbmYlPMBYJgT7cS5wfwDOKODBLFbvaEcH5iyaSYwY-C8mSCNYBd0FBnjMaY00Fv424i0Iiw5SDJT4SeR9WLrT8GsGwUJQTpcCca6opUR938sPjTEgClmJP48pcF4yoCH7rMghPuo6utVqsDH8laYblEayE1DX73YLnhX5vcKDX6xkV3bTNU5m2IbHgyV3iU6Hfyuxoub6tAnSjIUhwbqrb0GaCaykYMw4LrOebZxCsFqqhP5byrxwjqnJuKt5VXJe4JrlQVAtpymiBtpMX7J8EbheGt1VEggU34SmOmw602TNGCdeqlRWgG1kBqpwoNBSENd5hdZ-_IfIHjW_a15aqfsYMK4VICpJ6XFLKmP_ghMOZN7eUqdB34j-k1WrM3k-a6IPv5C9WLJiQl-07Xl42rsGNxt48DP-Ks_-Bw02pG-JkEgyQ-19EcilRTQw_IXs-aolutd4k1tu_FdIMZVPIW6eZJascoaoknY0AWWUTLx93u7ddWChsRULL3Bk0gb6WBbFgRqQ5xJjwVOZEUB9IRiLom9eEpLhguvzlzyYtx_yLENklU4pif4B-ipkyVpEnWBNEsbk0stYrzYwQORMF19CfuBUD-if4An1n4vS96XA0sB3X88YTx4JH6NveoO96w-nYHrr2aGiPnLMFX6tTB_2RCbfHrjue2t7E85zzL_egiMs?type=png)](https://mermaid.live/edit#pako:eNqllE2P2jAQhv-K5b20UqAkAQJRtVKCqYSEtAgWVWrTg0kcsOrYke20yyL-e50PAqHd9lAfosx45vGbmYlPMBYJgT7cS5wfwDOKODBLFbvaEcH5iyaSYwY-C8mSCNYBd0FBnjMaY00Fv424i0Iiw5SDJT4SeR9WLrT8GsGwUJQTpcCca6opUR938sPjTEgClmJP48pcF4yoCH7rMghPuo6utVqsDH8laYblEayE1DX73YLnhX5vcKDX6xkV3bTNU5m2IbHgyV3iU6Hfyuxoub6tAnSjIUhwbqrb0GaCaykYMw4LrOebZxCsFqqhP5byrxwjqnJuKt5VXJe4JrlQVAtpymiBtpMX7J8EbheGt1VEggU34SmOmw602TNGCdeqlRWgG1kBqpwoNBSENd5hdZ-_IfIHjW_a15aqfsYMK4VICpJ6XFLKmP_ghMOZN7eUqdB34j-k1WrM3k-a6IPv5C9WLJiQl-07Xl42rsGNxt48DP-Ks_-Bw02pG-JkEgyQ-19EcilRTQw_IXs-aolutd4k1tu_FdIMZVPIW6eZJascoaoknY0AWWUTLx93u7ddWChsRULL3Bk0gb6WBbFgRqQ5xJjwVOZEUB9IRiLom9eEpLhguvzlzyYtx_yLENklU4pif4B-ipkyVpEnWBNEsbk0stYrzYwQORMF19CfuBUD-if4An1n4vS96XA0sB3X88YTx4JH6NveoO96w-nYHrr2aGiPnLMFX6tTB_2RCbfHrjue2t7E85zzL_egiMs)
 
 ## Build and run
 
@@ -62,7 +66,7 @@ Oracle:
 docker run --rm --name xe -p 1521:1521 -p 8888:8080 wnameless/oracle-xe-11g-r2
 ```
 
-For details on an Oracle Docker image, see https://github.com/oracle/docker-images/tree/master/OracleDatabase/SingleInstance
+For details on an Oracle Docker image, see [Oracle Images Container](https://github.com/oracle/docker-images/tree/master/OracleDatabase/SingleInstance)
 
 ## Building the Docker Image
 
