@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   verify-base-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -17,7 +17,7 @@ jobs:
           cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com --certificate-identity keyless@distroless.iam.gserviceaccount.com
   build-and-push:
     needs: verify-base-image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -43,7 +43,7 @@ jobs:
           cache-to: type=gha,mode=max
   scan-image:
     needs: build-and-push
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:      
