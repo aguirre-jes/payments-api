@@ -1,8 +1,9 @@
 name: Container Build & Security Scan
-
 on:
   workflow_dispatch:
-
+permissions:
+  contents: read
+  packages: write
 jobs:
   verify-base-image:
     runs-on: ubuntu-latest
@@ -11,7 +12,6 @@ jobs:
         uses: sigstore/cosign-installer@v3.8.1
         with:
           cosign-release: 'v2.4.3'
-          
       - name: Verify Distroless Base Image Signature
         run: |
           IMAGE_NAME="gcr.io/distroless/java-base-debian12:latest"
@@ -32,7 +32,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.REGISTRY_TOKEN_PAYMENT_API }}
-          
       - name: Build and push image container to GitHub Container Registry
         uses: docker/build-push-action@v6.15.0
         with:
@@ -42,7 +41,6 @@ jobs:
           file: Dockerfile.jlink
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
   scan-image:
     needs: build-and-push
     runs-on: ubuntu-latest
