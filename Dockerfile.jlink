@@ -5,12 +5,14 @@ FROM container-registry.oracle.com/java/jdk-no-fee-term:24 AS build
 WORKDIR /usr/share
 
 # Install maven with integrity verification
+ADD https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz /usr/share/
+ADD https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz.sha512 /usr/share/
+
 RUN set -x && \
-    curl -O https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz && \
-    curl -O https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz.sha512 && \
+    cd /usr/share && \
     echo "$(cat apache-maven-3.9.9-bin.tar.gz.sha512) apache-maven-3.9.9-bin.tar.gz" | sha512sum -c - && \
-    tar -xvf apache-maven-*-bin.tar.gz  && \
-    rm apache-maven-*-bin.tar.gz apache-maven-*-bin.tar.gz.sha512 && \
+    tar -xvf apache-maven-3.9.9-bin.tar.gz && \
+    rm apache-maven-3.9.9-bin.tar.gz apache-maven-3.9.9-bin.tar.gz.sha512 && \
     mv apache-maven-* maven && \
     ln -s /usr/share/maven/bin/mvn /bin/
 
@@ -31,21 +33,21 @@ RUN mvn package -Pjlink-image -DskipTests \
   echo "done!"
 
 # 2nd stage, build the final image with the JRI built in the 1st stage
-FROM gcr.io/distroless/java-base-debian12:latest
+FROM gcr.io/distroless/static-debian12:latest-amd64
 
 WORKDIR /helidon
 
 COPY --from=build /helidon/target/payments-api-mp-jri ./
 
 ENTRYPOINT ["/helidon/bin/java", \
-  # G1 ya estará activo por defecto, pero puedes especificarlo explícitamente
+  # G1 is already active by default, but you can specify it explicitly
   "-XX:+UseG1GC", \
-  # Ajustar para latencia más predecible
+  # Adjust for more predictable latency
   "-XX:MaxGCPauseMillis=100", \
-  # Establecer tamaños fijos para evitar redimensionamientos costosos
+  # Set fixed sizes to avoid costly resizing
   "-Xms256m", \
   "-Xmx256m", \
-  # Otros parámetros de ajuste
+  # Other tuning parameters
   "-XX:+ParallelRefProcEnabled", \
   "-jar", "/helidon/app/payments-api-mp.jar"]
 

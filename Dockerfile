@@ -2,12 +2,15 @@
 # 1st stage, build the app
 FROM container-registry.oracle.com/java/jdk-no-fee-term:24 AS build
 
-# Install maven
-WORKDIR /usr/share
+# Install maven with integrity verification
+ADD https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz /usr/share/
+ADD https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz.sha512 /usr/share/
+
 RUN set -x && \
-    curl -O https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz && \
-    tar -xvf apache-maven-*-bin.tar.gz  && \
-    rm apache-maven-*-bin.tar.gz && \
+    cd /usr/share && \
+    echo "$(cat apache-maven-3.9.9-bin.tar.gz.sha512) apache-maven-3.9.9-bin.tar.gz" | sha512sum -c - && \
+    tar -xvf apache-maven-3.9.9-bin.tar.gz && \
+    rm apache-maven-3.9.9-bin.tar.gz apache-maven-3.9.9-bin.tar.gz.sha512 && \
     mv apache-maven-* maven && \
     ln -s /usr/share/maven/bin/mvn /bin/
 

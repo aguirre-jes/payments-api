@@ -13,7 +13,7 @@ jobs:
           cosign-release: 'v2.4.3'
       - name: Verify Distroless Base Image Signature
         run: |
-          IMAGE_NAME="gcr.io/distroless/java-base-debian12:latest"
+          IMAGE_NAME="gcr.io/distroless/static-debian12:latest-amd64"
           cosign verify $IMAGE_NAME --certificate-oidc-issuer https://accounts.google.com --certificate-identity keyless@distroless.iam.gserviceaccount.com
   build-and-push:
     needs: verify-base-image
