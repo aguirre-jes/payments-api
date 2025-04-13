@@ -10,7 +10,7 @@ A Helidon MP application for managing payments, utilizing a hexagonal architectu
 
 ## Build and run
 
-With JDK23
+With JDK24+
 
 ```bash
 mvn package
