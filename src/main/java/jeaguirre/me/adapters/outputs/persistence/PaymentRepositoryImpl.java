@@ -47,6 +47,9 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     @Override
     @Transactional
     public void update(Payment payment) {
+        if (payment == null) {
+            throw new PaymentUpdateException("Error updating payment object is null", null);
+        }
         try {
             entityManager.merge(payment);
         } catch (Exception e) {

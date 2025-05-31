@@ -23,6 +23,7 @@ import jakarta.transaction.Transactional;
 import jeaguirre.me.adapters.outputs.persistence.entities.Payment;
 import jeaguirre.me.domains.exceptions.PaymentSaveException;
 import jeaguirre.me.domains.exceptions.PaymentSearchException;
+import jeaguirre.me.domains.exceptions.PaymentUpdateException;
 import jeaguirre.me.domains.ports.PaymentRepository;
 import jeaguirre.me.utils.OracleDbContainerExtension;
 
@@ -148,6 +149,17 @@ class PaymentRepositoryImplTest {
         Optional<Payment> updatedPayment = paymentRepository.findById(99);
         assertTrue(updatedPayment.isPresent());
         assertEquals(new BigDecimal("750.00"), updatedPayment.get().getAmount());
+    }
+
+    @Test
+    @Transactional
+    void updatePaymentThrowsPaymentUpdateExceptionWhenNull() {
+        // Test the null payment case
+        PaymentUpdateException exception = assertThrows(PaymentUpdateException.class, () -> {
+            paymentRepository.update(null);
+        });
+
+        assertEquals("Error updating payment object is null", exception.getMessage());
     }
 
     @Test
