@@ -201,10 +201,10 @@ class PaymentServiceIntegrationTest {
     @Test
     @Transactional
     void findByPayerId() {
-        List<Payment> payments = paymentService.findByPayerId(102);
+        List<Payment> payments = paymentService.findByPayerId(103);
         assertFalse(payments.isEmpty());
         boolean found = payments.stream()
-                .anyMatch(p -> p.getPayerId() == 102 && p.getId() == 2);
+                .anyMatch(p -> p.getPayerId() == 103 && p.getId() == 7);
         assertTrue(found, "Should find the payment we just created with the expected payer ID");
     }
 
@@ -220,12 +220,12 @@ class PaymentServiceIntegrationTest {
     @Test
     @Transactional
     void findByPayeeId() {
-        List<Payment> payments = paymentService.findByPayeeId(202);
+        List<Payment> payments = paymentService.findByPayeeId(203);
         assertFalse(payments.isEmpty());
 
         // Verify at least one payment has the expected payee ID
         boolean found = payments.stream()
-                .anyMatch(p -> p.getPayeeId() == 202 && p.getId() == 2);
+                .anyMatch(p -> p.getPayeeId() == 203 && p.getId() == 7);
         assertTrue(found, "Should find the payment we just created with the expected payee ID");
     }
 

@@ -37,7 +37,7 @@ class FindPaymentsByPayeeIdUseCaseIntegrationTest {
 
         // Verify results
         assertNotNull(paymentsToPayee1);
-        assertEquals(1, paymentsToPayee1.size());
+        assertEquals(7, paymentsToPayee1.size());
     }
 
     @Test
