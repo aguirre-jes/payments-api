@@ -1,6 +1,6 @@
 # Payments API MP
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Tests Java](https://github.com/aguirre-jes/payments-api/actions/workflows/tests.yaml/badge.svg)](https://github.com/aguirre-jes/payments-api/actions/workflows/tests.yaml) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aguirre-jes_payments-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aguirre-jes_payments-api)
 
 ## Overview
 
@@ -10,7 +10,7 @@ A Helidon MP application for managing payments, utilizing a hexagonal architectu
 
 ## Build and run
 
-With JDK24+
+With JDK21+
 
 ```bash
 mvn package
@@ -27,7 +27,7 @@ curl -s -X GET http://localhost:8080/health
 
 ## Building a Native Image
 
-The generation of native binaries requires an installation of GraalVM 22.1.0+.
+The generation of native binaries requires an installation of GraalVM 21.1.0+.
 
 You can build a native binary using Maven as follows:
 
