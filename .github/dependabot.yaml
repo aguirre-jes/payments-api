@@ -4,7 +4,9 @@ updates:
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+      time: "06:00"
+      timezone: "America/Bogota"
     labels:
       - "dependencies"
       - "maven"
@@ -15,9 +17,30 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+      time: "06:00"
+      timezone: "America/Bogota"
     labels:
       - "dependencies"
       - "docker"
     assignees:
       - "aguirre-jes"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "06:00"
+      timezone: "America/Bogota"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    assignees:
+      - "aguirre-jes"
+    groups:
+      actions:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
