@@ -8,7 +8,7 @@
 	// For more information about features check: https://github.com/devcontainers/features/tree/main/src/java
 	"features": {   
 		"ghcr.io/devcontainers/features/java:1": {
-			"version": "25",
+			"version": "21",
 			"installMaven": "true",
 			"mavenVersion": "3.9.9"
 		},
