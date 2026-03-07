@@ -33,7 +33,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.REGISTRY_TOKEN_PAYMENT_API }}
       - name: Build and push image container to GitHub Container Registry
-        uses: docker/build-push-action@v6.15.0
+        uses: docker/build-push-action@v7.0.0
         with:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
