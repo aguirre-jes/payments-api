@@ -1,6 +1,6 @@
 
 # 1st stage, build the app
-FROM container-registry.oracle.com/java/jdk-no-fee-term:24 AS build
+FROM container-registry.oracle.com/java/jdk-no-fee-term:25 AS build
 
 # Install maven with integrity verification
 ADD https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz /usr/share/
@@ -30,7 +30,7 @@ RUN mvn package -DskipTests
 RUN echo "done!"
 
 # 2nd stage, build the runtime image
-FROM container-registry.oracle.com/java/jdk-no-fee-term:24
+FROM container-registry.oracle.com/java/jdk-no-fee-term:25
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
