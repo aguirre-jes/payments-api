@@ -1,7 +1,7 @@
 name: Dependabot Revision
 on: 
     pull_request:
-        branches: [main]
+        branches: [master]
         types: [opened, synchronize]
 permissions:
   contents: write
@@ -9,6 +9,7 @@ permissions:
 jobs:
   approve-and-merge:
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: Dependabot metadata

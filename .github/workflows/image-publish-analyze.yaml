@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+    timeout-minutes: 10
     steps:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.8.1
@@ -21,6 +22,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+    timeout-minutes: 30
     steps:
       - name: Check out code
         uses: actions/checkout@v4.2.2
@@ -46,6 +48,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+    timeout-minutes: 15
     steps:      
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.35.0
