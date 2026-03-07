@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Install Cosign
-        uses: sigstore/cosign-installer@v3.8.1
+        uses: sigstore/cosign-installer@v4.0.0
         with:
           cosign-release: 'v2.4.3'
       - name: Verify Distroless Base Image Signature
@@ -35,7 +35,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.REGISTRY_TOKEN_PAYMENT_API }}
       - name: Build and push image container to GitHub Container Registry
-        uses: docker/build-push-action@v6.15.0
+        uses: docker/build-push-action@v7.0.0
         with:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
