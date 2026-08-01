@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Install Cosign
-        uses: sigstore/cosign-installer@v4.1.1
+        uses: sigstore/cosign-installer@v4.1.2
         with:
           cosign-release: 'v2.4.3'
       - name: Verify Distroless Base Image Signature
@@ -32,15 +32,15 @@ jobs:
         id: version
         run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4.0.0
+        uses: docker/setup-buildx-action@v4.2.0
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v4.0.0
+        uses: docker/login-action@v4.6.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.REGISTRY_TOKEN_PAYMENT_API }}
       - name: Build and push image container to GitHub Container Registry
-        uses: docker/build-push-action@v7.1.0
+        uses: docker/build-push-action@v7.3.0
         with:
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ steps.version.outputs.VERSION }}
