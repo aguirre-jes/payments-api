@@ -27,7 +27,7 @@ jobs:
       version: ${{ steps.version.outputs.VERSION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v7.0.1
       - name: Extract version from pom.xml
         id: version
         run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
